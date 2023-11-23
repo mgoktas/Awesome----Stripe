@@ -5,7 +5,7 @@ const router = express.Router();
 
 // .well-known/apple-app-site-association
 
-app.get('/', (req, res) => {
+app.use('/', (req, res) => {
     res
       .status(200)
       .send('Hello server is running')
