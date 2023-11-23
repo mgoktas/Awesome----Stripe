@@ -16,6 +16,9 @@ app.use(session({
   },
 }))
 
+app.get('/', (req,res) => {
+  res.status(200).render('Hello World')
+})
 
 app.use(cookieParser())
 
