@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/static', express.static(path.join(__dirname, '/')))
 
-app.get('/', async (req,res) => {
+app.use('/', async (req,res) => {
   res.status(200).render('Hello World')
 })
 
