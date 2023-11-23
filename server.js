@@ -1,10 +1,17 @@
 const express = require('express')
-
 const app = express()
-
 const path = require('path');
-
 const router = express.Router();
+
+// .well-known/apple-app-site-association
+
+app.get('/', (req, res) => {
+    res
+      .status(200)
+      .send('Hello server is running')
+      .end();
+  });
+   
 
 app.use("/.well-known/apple-app-site-association", function (req, res) {
     console.log(__dirname)
