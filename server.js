@@ -1,21 +1,23 @@
 const express = require('express')
+const app = express()
 const path = require('path');
 const router = express.Router();
 
 // .well-known/apple-app-site-association
 
-const PORT = process.env.PORT || 5001
+app.use('/static', express.static(path.join(__dirname, '/')))
 
-const stripe = require('stripe')('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');
-
-express()
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-  .use("/.well-known/apple-app-site-association", function (req, res) {
+app.use("/.well-known/apple-app-site-association", function (req, res) {
     console.log(__dirname)
     console.log(__filename)
     res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
-  })
-  .post('/payment-sheet', async (req, res) => {
+} )
+
+const stripe = require('stripe')('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');
+// const stripe = require('stripe')('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');
+const PORT = process.env.PORT || 3000
+
+app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const customer = await stripe.customers.create();
   const ephemeralKey = await stripe.ephemeralKeys.create(
@@ -39,6 +41,11 @@ express()
     customer: customer.id,
     // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
   });
-  })
+});
 
-// const stripe = require('stripe')('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');
+app.use('/a', async(req, res) => {
+    res.render('index.html', { layout: false });
+})
+
+app.listen(PORT, 
+	() => console.log("Server is running..."));
