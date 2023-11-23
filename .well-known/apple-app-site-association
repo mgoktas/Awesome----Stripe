@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+      "details": [
+           {
+             "appID": [ "FKC883QP66", "org.willdoro.awesome" ],
+             "paths": ["*"]
+           }
+       ]
+   }
+}
