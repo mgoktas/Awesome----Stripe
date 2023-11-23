@@ -1,29 +1,21 @@
 const express = require('express')
-const app = express()
 const path = require('path');
 const router = express.Router();
 
 // .well-known/apple-app-site-association
 
-app.use('/', (req, res) => {
-    res
-      .status(200)
-      .send('Hello server is running')
-      .end();
-  });
-   
+const PORT = process.env.PORT || 5001
 
-app.use("/.well-known/apple-app-site-association", function (req, res) {
+const stripe = require('stripe')('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');
+
+express()
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .use("/.well-known/apple-app-site-association", function (req, res) {
     console.log(__dirname)
     console.log(__filename)
     res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
-} )
-
-const stripe = require('stripe')('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');
-// const stripe = require('stripe')('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');
-const PORT = 3000
-
-app.post('/payment-sheet', async (req, res) => {
+  })
+  .post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const customer = await stripe.customers.create();
   const ephemeralKey = await stripe.ephemeralKeys.create(
@@ -47,11 +39,6 @@ app.post('/payment-sheet', async (req, res) => {
     customer: customer.id,
     // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
   });
-});
+  })
 
-app.use('/a', async(req, res) => {
-    res.render('index.html', { layout: false });
-})
-
-app.listen(process.env.PORT || 3000, 
-	() => console.log("Server is running..."));
+// const stripe = require('stripe')('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');
