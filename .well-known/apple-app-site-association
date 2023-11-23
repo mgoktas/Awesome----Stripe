@@ -1,11 +1,13 @@
+
 {
   "applinks": {
-    "apps": [],
-      "details": [
-           {
-             "appID": [ "FKC883QP66", "org.willdoro.awesome" ],
-             "paths": ["*"]
-           }
-       ]
-   }
+      "apps": [],
+      "details": {
+          "FKC883QP66.org.willdoro.awesome": {
+              "paths": [
+                "*"
+              ]
+          }
+      }
+  }
 }
