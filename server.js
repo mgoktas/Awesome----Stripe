@@ -16,7 +16,7 @@ app.use(session({
   },
 }))
 
-app.get('/', (req,res) => {
+app.get('/', async (req,res) => {
   res.status(200).render('Hello World')
 })
 
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/static', express.static(path.join(__dirname, '/')))
 
-app.use("/.well-known/apple-app-site-association", function (req, res) {
+app.use("/.well-known/apple-app-site-association", async function (req, res) {
     console.log(__dirname)
     console.log(__filename)
     res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
