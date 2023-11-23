@@ -21,6 +21,7 @@ app.use("/.well-known/apple-app-site-association", function (req, res) {
 
 const stripe = require('stripe')('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');
 // const stripe = require('stripe')('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');
+const PORT = 3000
 
 app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
@@ -51,3 +52,6 @@ app.post('/payment-sheet', async (req, res) => {
 app.use('/a', async(req, res) => {
     res.render('index.html', { layout: false });
 })
+
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
