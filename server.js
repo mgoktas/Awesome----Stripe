@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/static', express.static(path.join(__dirname, '/')))
 
 app.use('/', async (req,res) => {
-  res.status(200).render('Hello World')
+  res.status(200).send('Hello World')
 })
 
 app.use("/.well-known/apple-app-site-association", async function (req, res) {
