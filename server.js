@@ -16,7 +16,6 @@ app.use(session({
   },
 }))
 
-
 app.use(cookieParser())
 
 app.use(express.urlencoded({ extended: false }));
@@ -46,8 +45,8 @@ app.post('/payment-sheet', async (req, res) => {
   );
   
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 20,
-    currency: 'eur',
+    amount: 49900,
+    currency: 'usd',
     customer: customer.id,
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
@@ -59,7 +58,7 @@ app.post('/payment-sheet', async (req, res) => {
     paymentIntent: paymentIntent.client_secret,
     ephemeralKey: ephemeralKey.secret,
     customer: customer.id,
-    // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
+    publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
   });
 });
 
