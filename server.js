@@ -134,35 +134,40 @@ app.post('/set-password', async (req, res) => {
 
     const {email, password} = req.query
 
-  // const client = new MongoClient(uri, {
-  //   serverApi: {
-  //     version: ServerApiVersion.v1,
-  //     strict: true,
-  //     deprecationErrors: true,
-  //   }
-  // });
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
-  //     const database = client.db("userpasswords");
-  //     const user = database.collection(email);
+      const database = client.db("userpasswords");
+      const user = database.collection(email);
 
 
-  // try {    
+  try {    
 
-  //   const doc = {
-  //     password: password
-  //   }
+    const doc = {
+      password: password
+    }
 
-  // const result = await user.insertOne(doc);
+  const result = await user.insertOne(doc);
 
   res.json({
     result: email + password
   })
 
-  // } catch (err){
-  //   res.json({
-  //     result: '404'
-  //   })
-  // }
+  } catch (err){
+    res.json({
+      result: '404'
+    })
+  }
+
+  finally {
+    await client.close();
+}
+
 
 });
 
