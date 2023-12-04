@@ -4,6 +4,8 @@ const path = require('path');
 const router = express.Router();
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://dbUser:qAz687213@atlascluster.n9lzqth.mongodb.net/?retryWrites=true&w=majority";
 
 // .well-known/apple-app-site-association
 
@@ -125,6 +127,119 @@ app.post('/cancel-sub', async (req, res) => {
   res.json({
     result: '200'
   })
+
+});
+
+app.post('/set-password', async (req, res) => {
+
+    const {email, password} = req.body
+
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+      const database = client.db("userpasswords");
+      const user = database.collection(email);
+
+
+  try {    
+
+    const doc = {
+      password: password
+    }
+
+  const result = await user.insertOne(doc);
+
+  res.json({
+    result: result
+  })
+
+  } catch (err){
+    res.json({
+      result: '404'
+    })
+  }
+
+});
+
+app.post('/update-password', async (req, res) => {
+
+  const {email, password} = req.body
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+    const database = client.db("userpasswords");
+    const user = database.collection(email);
+
+
+
+try {    
+
+        const options = {
+            upsert: true
+        };
+        const filter = {};
+
+        const updateDoc = {
+            $set: {
+                password: password
+            },
+        };
+        const result = await user.updateOne(filter, updateDoc, options);
+
+res.json({
+  result: result
+})
+
+} catch (err){
+  res.json({
+    result: '404'
+  })
+}
+
+});
+
+app.post('/get-password', async (req, res) => {
+
+  const {email} = req.query
+
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  const database = client.db("userpasswords")
+  const users = database.collection(email);
+  
+  try {   
+    
+    const result =  await users.find().toArray();
+
+    res.json({
+      result: result
+    })
+    
+
+  } catch (err){
+    res.json({
+      result: '404'
+    })
+  }
+
+  
 
 });
 
