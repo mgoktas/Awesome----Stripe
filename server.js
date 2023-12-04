@@ -134,7 +134,7 @@ app.post('/set-password', async (req, res) => {
 
     const {email, password} = req.query
 
-  const client =await  new MongoClient(uri, {
+  const client =  new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
@@ -142,11 +142,12 @@ app.post('/set-password', async (req, res) => {
     }
   });
 
-      const database = client.db("userpasswords");
-      const user = database.collection(email);
-
+     
 
   try {    
+
+    const database = client.db("userpasswords");
+    const user = database.collection(email);
 
     const doc = {
       password: password
@@ -160,7 +161,7 @@ app.post('/set-password', async (req, res) => {
 
   } catch (err){
     res.json({
-      result: '404'
+      result: err
     })
   }
 
