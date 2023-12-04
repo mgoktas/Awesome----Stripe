@@ -28,113 +28,113 @@ app.get('/', async (req,res) => {
   res.status(200).send('Hello World')
 })
 
-app.use("/.well-known/apple-app-site-association", async function (req, res) {
-    console.log(__dirname)
-    console.log(__filename)
-    res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
-} )
+// app.use("/.well-known/apple-app-site-association", async function (req, res) {
+//     console.log(__dirname)
+//     console.log(__filename)
+//     res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
+// } )
 
 // const stripe = require('stripe')('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');
-const stripe = require('stripe')('sk_test_51MzWeiEYzAPwGPE1vKrubfWOhfFxWYxotsGYVSdS8QcXWHwNk1IcLOzIqsZPhSRGymalUo8TrAAIQrnl0eLiCmHh00WRnMD5Wg');
+// const stripe = require('stripe')('sk_test_51MzWeiEYzAPwGPE1vKrubfWOhfFxWYxotsGYVSdS8QcXWHwNk1IcLOzIqsZPhSRGymalUo8TrAAIQrnl0eLiCmHh00WRnMD5Wg');
 const PORT = process.env.PORT || 3000
 
-app.post('/payment-sheet', async (req, res) => {
-  // Use an existing Customer ID if this is a returning customer.
-  const customer = await stripe.customers.create();
-  const ephemeralKey = await stripe.ephemeralKeys.create(
-    {customer: customer.id},
-    {apiVersion: '2022-11-15'}
-  );
+// app.post('/payment-sheet', async (req, res) => {
+//   // Use an existing Customer ID if this is a returning customer.
+//   const customer = await stripe.customers.create();
+//   const ephemeralKey = await stripe.ephemeralKeys.create(
+//     {customer: customer.id},
+//     {apiVersion: '2022-11-15'}
+//   );
   
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 499,
-    currency: 'usd',
-    customer: customer.id,
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: 499,
+//     currency: 'usd',
+//     customer: customer.id,
+//     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+//     automatic_payment_methods: {
+//       enabled: true,
+//     },
+//   });
 
-  res.json({
-    paymentIntent: paymentIntent.client_secret,
-    amount: paymentIntent.amount,
-    ephemeralKey: ephemeralKey.secret,
-    customer: customer.id,
-    // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
-  });
-});
+//   res.json({
+//     paymentIntent: paymentIntent.client_secret,
+//     amount: paymentIntent.amount,
+//     ephemeralKey: ephemeralKey.secret,
+//     customer: customer.id,
+//     // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
+//   });
+// });
 
-app.post('/create-checkout-session', async (req, res) => {
+// app.post('/create-checkout-session', async (req, res) => {
 
-  const {priceId} = req.query
-  const customer = await stripe.customers.create();
-  const ephemeralKey = await stripe.ephemeralKeys.create(
-    {customer: customer.id},
-    {apiVersion: '2022-11-15'}
-  );
+//   const {priceId} = req.query
+//   const customer = await stripe.customers.create();
+//   const ephemeralKey = await stripe.ephemeralKeys.create(
+//     {customer: customer.id},
+//     {apiVersion: '2022-11-15'}
+//   );
 
-  const subscription = await stripe.subscriptions.create({
-    customer: customer.id,
-    items: [
-      {
-        price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
-      },
-    ],
-    payment_behavior: 'default_incomplete',
-    expand: ['latest_invoice.payment_intent'],
-    trial_period_days: 7
-  });
+//   const subscription = await stripe.subscriptions.create({
+//     customer: customer.id,
+//     items: [
+//       {
+//         price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
+//       },
+//     ],
+//     payment_behavior: 'default_incomplete',
+//     expand: ['latest_invoice.payment_intent'],
+//     trial_period_days: 7
+//   });
 
 
   
   
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 499,
-    currency: 'usd',
-    customer: customer.id,
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-    metadata: {
-      subscriptionId: subscription.id,
-      reason: 'subscription',
-    },
-  });
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: 499,
+//     currency: 'usd',
+//     customer: customer.id,
+//     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+//     automatic_payment_methods: {
+//       enabled: true,
+//     },
+//     metadata: {
+//       subscriptionId: subscription.id,
+//       reason: 'subscription',
+//     },
+//   });
   
-    res.json({
-      paymentIntent: paymentIntent.client_secret,
-      amount: paymentIntent.amount,
-      ephemeralKey: ephemeralKey.secret,
-      customer: customer.id,
-      subscription: subscription.id
-    });
-});
+//     res.json({
+//       paymentIntent: paymentIntent.client_secret,
+//       amount: paymentIntent.amount,
+//       ephemeralKey: ephemeralKey.secret,
+//       customer: customer.id,
+//       subscription: subscription.id
+//     });
+// });
 
-app.post('/cancel-sub', async (req, res) => {
+// app.post('/cancel-sub', async (req, res) => {
 
-  const {subId} = req.query
+//   const {subId} = req.query
 
-  try {    
-    const subscription = await stripe.subscriptions.cancel(subId);
-  } catch (err){
-    res.json({
-      result: err
-    })
-  }
+//   try {    
+//     const subscription = await stripe.subscriptions.cancel(subId);
+//   } catch (err){
+//     res.json({
+//       result: err
+//     })
+//   }
 
-  res.json({
-    result: '200'
-  })
+//   res.json({
+//     result: '200'
+//   })
 
-});
+// });
 
 app.post('/set-password', async (req, res) => {
 
     const {email, password} = req.query
 
-  const client = new MongoClient(uri, {
+  const client =await  new MongoClient(uri, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
