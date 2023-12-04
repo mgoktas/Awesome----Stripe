@@ -132,7 +132,7 @@ app.post('/cancel-sub', async (req, res) => {
 
 app.post('/set-password', async (req, res) => {
 
-    const {email, password} = req.body
+    const {email, password} = req.query
 
   const client = new MongoClient(uri, {
     serverApi: {
@@ -168,7 +168,7 @@ app.post('/set-password', async (req, res) => {
 
 app.post('/update-password', async (req, res) => {
 
-  const {email, password} = req.body
+  const {email, password} = req.query
 
 const client = new MongoClient(uri, {
   serverApi: {
