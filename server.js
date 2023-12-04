@@ -106,8 +106,33 @@ app.post('/create-checkout-session', async (req, res) => {
       amount: paymentIntent.amount,
       ephemeralKey: ephemeralKey.secret,
       customer: customer.id,
+      subscription: subscription.id
     });
 });
+
+app.post('/cancel-sub', async (req, res) => {
+
+  const {subId} = await req.body
+
+  try {    
+    const subscription = await stripe.subscriptions.update(
+      await subId,
+      {
+        cancel_at_period_end: true,
+      }
+    );
+  } catch (err){
+    res.json({
+      result: '404'
+    })
+  }
+
+  res.json({
+    result: '200'
+  })
+
+});
+
 
 console.log('499')
 
