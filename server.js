@@ -115,12 +115,7 @@ app.post('/cancel-sub', async (req, res) => {
   const {subId} = req.query
 
   try {    
-    const subscription = await stripe.subscriptions.update(
-      subId,
-      {
-        cancel_at_period_end: true,
-      }
-    );
+    const subscription = await stripe.subscriptions.cancel(subId);
   } catch (err){
     res.json({
       result: err
