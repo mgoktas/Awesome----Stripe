@@ -155,7 +155,7 @@ app.post('/set-password', async (req, res) => {
   // const result = await user.insertOne(doc);
 
   res.json({
-    result: 'result'
+    result: email + password
   })
 
   // } catch (err){
