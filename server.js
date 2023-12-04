@@ -112,23 +112,24 @@ app.post('/create-checkout-session', async (req, res) => {
 
 app.post('/cancel-sub', async (req, res) => {
 
-  const {subId} = await req.body
+  const {subId} = req.query
 
   try {    
-    const subscription = await stripe.subscriptions.update(
-      await subId,
-      {
-        cancel_at_period_end: true,
-      }
-    );
+    // const subscription = await stripe.subscriptions.update(
+    //   await subId,
+    //   {
+    //     cancel_at_period_end: true,
+    //   }
+    // );
+    // console.log()
   } catch (err){
     res.json({
-      result: '404'
+      result: `404${subId}`
     })
   }
 
   res.json({
-    result: '200'
+      result: `404${subId}`
   })
 
 });
