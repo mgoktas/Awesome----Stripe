@@ -77,7 +77,8 @@ app.post('/create-checkout-session', async (req, res) => {
     customer: customer.id,
     items: [
       {
-        price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
+        // price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
+        price: 'price_1OGDO2EYzAPwGPE1sx7e0bOP',
       },
     ],
     payment_behavior: 'default_incomplete',
@@ -90,7 +91,7 @@ app.post('/create-checkout-session', async (req, res) => {
   
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 499,
-    
+
     currency: 'usd',
     customer: customer.id,
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
@@ -102,153 +103,15 @@ app.post('/create-checkout-session', async (req, res) => {
       reason: 'subscription',
     },
   });
-  
+ 
     res.json({
       paymentIntent: paymentIntent.client_secret,
       amount: paymentIntent.amount,
       ephemeralKey: ephemeralKey.secret,
       customer: customer.id,
-      // subscription: subscription.id
+      subscription: subscription.id
     });
 });
-
-app.post('/cancel-sub', async (req, res) => {
-
-  const {subId} = req.query
-
-  try {    
-    const subscription = await stripe.subscriptions.cancel(subId);
-  } catch (err){
-    res.json({
-      result: err
-    })
-  }
-
-  res.json({
-    result: '200'
-  })
-
-});
-
-// app.post('/set-password', async (req, res) => {
-
-//     const {email, password} = req.query
-
-//   const client =await  new MongoClient(uri, {
-//     serverApi: {
-//       version: ServerApiVersion.v1,
-//       strict: true,
-//       deprecationErrors: true,
-//     }
-//   });
-
-//       const database = client.db("userpasswords");
-//       const user = database.collection(email);
-
-
-//   try {    
-
-//     const doc = {
-//       password: password
-//     }
-
-//   const result = await user.insertOne(doc);
-
-//   res.json({
-//     result: result
-//   })
-
-//   } catch (err){
-//     res.json({
-//       result: '404'
-//     })
-//   }
-
-//   finally {
-//     await client.close();
-// }
-
-
-// });
-
-// app.post('/update-password', async (req, res) => {
-
-//   const {email, password} = req.query
-
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
-
-//     const database = client.db("userpasswords");
-//     const user = database.collection(email);
-
-
-
-// try {    
-
-//         const options = {
-//             upsert: true
-//         };
-//         const filter = {};
-
-//         const updateDoc = {
-//             $set: {
-//                 password: password
-//             },
-//         };
-//         const result = await user.updateOne(filter, updateDoc, options);
-
-// res.json({
-//   result: result
-// })
-
-// } catch (err){
-//   res.json({
-//     result: '404'
-//   })
-// }
-
-// });
-
-// app.post('/get-password', async (req, res) => {
-
-//   const {email} = req.query
-
-//   const client = new MongoClient(uri, {
-//     serverApi: {
-//       version: ServerApiVersion.v1,
-//       strict: true,
-//       deprecationErrors: true,
-//     }
-//   });
-
-//   const database = client.db("userpasswords")
-//   const users = database.collection(email);
-  
-//   try {   
-    
-//     const result =  await users.find().toArray();
-
-//     res.json({
-//       result: result
-//     })
-    
-
-//   } catch (err){
-//     res.json({
-//       result: '404'
-//     })
-//   }
-
-  
-
-// });
-
-console.log('499')
 
 app.post('/create-checkout-session2', async (req, res) => {
   console.log('499')
@@ -315,6 +178,24 @@ app.post('/create-checkout-session2', async (req, res) => {
     });
 
   // res.redirect(303, 'http://will-doro-ff47e2266450.herokuapp.com/success?email=email')
+});
+
+app.post('/cancel-sub', async (req, res) => {
+
+  const {subId} = req.query
+
+  try {    
+    const subscription = await stripe.subscriptions.cancel(subId);
+  } catch (err){
+    res.json({
+      result: err
+    })
+  }
+
+  res.json({
+    result: '200'
+  })
+
 });
 
 app.use('/a', async(req, res) => {
