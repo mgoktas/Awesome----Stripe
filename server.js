@@ -77,8 +77,8 @@ app.post('/create-checkout-session', async (req, res) => {
     customer: customer.id,
     items: [
       {
-        // price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
-        price: 'price_1OGDO2EYzAPwGPE1sx7e0bOP',
+        price: 'price_1OFSqJEYzAPwGPE1fvwe4P2b',
+        // price: 'price_1OGDO2EYzAPwGPE1sx7e0bOP',
       },
     ],
     payment_behavior: 'default_incomplete',
