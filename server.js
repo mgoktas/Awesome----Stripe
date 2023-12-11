@@ -113,6 +113,18 @@ app.post('/create-checkout-session', async (req, res) => {
     });
 });
 
+app.post('/in-app', async (req, res) => {
+
+
+  console.log(req.body)
+
+  
+  
+  
+ 
+ 
+});
+
 app.post('/create-checkout-session2', async (req, res) => {
   console.log('499')
 
