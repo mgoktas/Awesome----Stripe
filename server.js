@@ -261,8 +261,16 @@ app.post('/cancel-sub', async (req, res) => {
 
 });
 
+app.use(express.static(path.join(__dirname, '/')));
+
+var engines = require('consolidate');
+
+app.set('views', __dirname);
+app.engine('html', engines.mustache);
+app.set('view engine', 'html');
+
 app.get('/a', async(req, res) => {
-    res.render('index.html', { layout: false });
+    res.render('willdoro.html', { layout: false });
 })
 
 app.get('/', async (req,res) => {
