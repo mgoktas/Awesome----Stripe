@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+    <link rel="stylesheet" href="../node_modules/owl.carousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="../node_modules/lightbox2/dist/css/lightbox.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>WillDoro</title>
+</head>
+<body>
+    
+    <!-- header -->
+    <header id="header__inner">
+        <div class="container">
+            <nav class="main-nav">
+                <img src="img/logo.png" alt="" class="main-nav__logo">
+                <ul class="main-nav__items">
+                    <li><a href="willdoro.html" class="active">Support</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="about-a" class="text-center py-2">
+        <div class="container">
+            <h2 class="section-title">WIllDoro</h2>
+            <div class="border-bottom"></div>
+            <div class="info">
+                <img src="img/AppIcons/willdoro.png" width="120px" alt="" class="info__image">
+                <div class="info__bio">
+                    <h3>What WillDoro Offers?.</h3>
+                    <p>WillDoro helps you study scientifically proven one of the most effective way to work and study.</p>
+                    <p>If you would like to change your study style, just swipe to left or right.</p>
+                    <p>After finishing the session, you will be awarded for a break.</p>
+                    <p>If you would like to change the break or work alarms, go to settings.</p>
+                    <p>If you would like to syncronise within all devices we offer 1 week trial period.</p>
+                    <p>If you have any questions you can contact us through twitter and mail. (at the bottom of page)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <body class="bg-gray-900">
+        <div class="mt-20 p-4 text-center border-t-4 border-red-600 mx-auto text-gray-700 pt-0">
+          <span class="bg-red-600 text-white p-4 -mt-8 mb-2">
+      </span>
+          <h3 class="font-bold text-2xl text-black mb-2">Delete Account Request?</h3>
+          <p>You'll permanently loose your</p>
+          <ul class="list-disc inline-block text-left pt-2 ml-2">
+            <li>Profile Information</li>
+            <li>Photos</li>
+            <li>All Account Information</li>
+          </ul>
+          <div class="flex pt-8">
+
+
+            <form>
+               
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-check">
+                </div>
+                <button type="button" class="btn btn-light">Cancel</button>
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+       
+            </form>
+
+
+        </div>
+        </div>
+      </body>
+      </form>
+    
+
+    <section id="contact-b" class="bg-primary py-4">
+        <div class="container">
+            <div class="contact-info">
+                <div>
+                    <i class="fas fa-envelope fa-2x"></i>
+                    <h3>Email</h3>
+                    <p>ahmethkhkhk@mail.com</p>
+                </div>
+                <div>
+                    <i class="fas fa-phone fa-2x"> </i>
+                    <h3>Phone</h3>
+                    <p>Coming Soon..</p>
+                </div>
+                <div>
+                    <i class="fas fa-address-card fa-2x"></i>
+                    <h3>Address</h3>
+                    <p>Pok Fu Lam, Hong Kong</p>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <footer id="main-footer">
+        <div class="footer-content container">
+            <p>Copyright &copy; 2025. All Rights Reserved.</p>
+
+            <div class="social">
+                <i class="fab fa-facebook"></i>
+                <a target="_blank" style="color: white;" href="https://twitter.com/rasitozgurfb">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent HTML submission
+        
+        console.log('adsads')
+
+        // Create payload of type multipart/form-data (awlays of this type when using the FormData() constructor):
+        const fd = new FormData(form);
+
+        // Convert to URL-encoded string:
+        const urlEncoded = new URLSearchParams(fd).toString();
+        
+        fetch('http://localhost:8080/deleteaccount', {
+            method: "POST",
+            body: urlEncoded, // just 'fd' for multipart/form-data
+            headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+            // Content-type header should only be set if data is url-encoded! A FormData object will set the header as multipart/form-data automatically (and setting it manually may lead to an error)
+            }
+        })
+
+        })
+
+    </script>
+
+</body>
+</html>

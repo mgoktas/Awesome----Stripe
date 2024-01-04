@@ -6,8 +6,10 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://dbUser:qAz687213@atlascluster.n9lzqth.mongodb.net/?retryWrites=true&w=majority";
+const cors = require('cors');
 
 // .well-known/apple-app-site-association
+
 
 app.use(session({
   secret: 'hello',
@@ -23,6 +25,55 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/static', express.static(path.join(__dirname, '/')))
+
+app.use(cors()); // Allows request from any IP (prevent any CORS error)
+
+// Enable parsing of URL-encoded data on all routes:
+app.use(express.urlencoded({
+   extended: false, // Whether to use algorithm that can handle non-flat data strutures
+   limit: 10000, // Limit payload size in bytes
+   parameterLimit: 2, // Limit number of form items on payload
+}));
+
+// app.get('/', async (req,res) => {
+//   res.sendFile(path.join(__dirname+'/willdoro.html'));
+// })
+
+const nodemailer = require('nodemailer');
+
+app.post('/deleteaccount', async function (req, res) {
+
+  const email = await req.body.email
+
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'mgoktasmgoktas@gmail.com',
+      pass: 'vwaf atti uhgs acqd'
+    },
+  });
+  
+  var mailOptions = {
+    from: 'mgoktasmgoktas@gmail.com',
+    to: 'ahmethkhkhk@gmail.com',
+    subject: 'Account Deletion Request',
+    text: 'Please delete this accounts info from database. That was easy!, email' + email
+  };
+  
+  await transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+})
+
+
 
 app.get('/', async (req,res) => {
   res.status(200).send('Hello World')
@@ -210,8 +261,12 @@ app.post('/cancel-sub', async (req, res) => {
 
 });
 
-app.use('/a', async(req, res) => {
+app.get('/a', async(req, res) => {
     res.render('index.html', { layout: false });
+})
+
+app.get('/', async (req,res) => {
+  res.status(200).send('Hello World')
 })
 
 app.listen(PORT, 
