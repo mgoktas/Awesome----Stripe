@@ -73,10 +73,8 @@ app.post('/deleteaccount', async function (req, res) {
 
 })
 
-
-
-app.get('/', async (req,res) => {
-  res.status(200).send('Hello World')
+app.get('/', async(req, res) => {
+  res.render('willdoro.html', { layout: false });
 })
 
 app.use("/.well-known/apple-app-site-association", async function (req, res) {
@@ -269,9 +267,7 @@ app.set('views', __dirname);
 app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
-app.get('/', async(req, res) => {
-    res.render('willdoro.html', { layout: false });
-})
+
 
 
 app.listen(PORT, 
