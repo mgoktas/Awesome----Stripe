@@ -269,13 +269,10 @@ app.set('views', __dirname);
 app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
-app.get('/a', async(req, res) => {
+app.get('/', async(req, res) => {
     res.render('willdoro.html', { layout: false });
 })
 
-app.get('/', async (req,res) => {
-  res.status(200).send('Hello World')
-})
 
 app.listen(PORT, 
 	() => console.log("Server is running..."));
