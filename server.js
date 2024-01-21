@@ -83,8 +83,8 @@ app.use("/.well-known/apple-app-site-association", async function (req, res) {
     res.sendFile(path.join(__dirname, "", ".well-known/apple-app-site-association"))
 } )
 
-const stripe = require('stripe')('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');
-// const stripe = require('stripe')('sk_test_51MzWeiEYzAPwGPE1vKrubfWOhfFxWYxotsGYVSdS8QcXWHwNk1IcLOzIqsZPhSRGymalUo8TrAAIQrnl0eLiCmHh00WRnMD5Wg');
+const stripe = require('stripe')('STRIPE_KEY_LIVE');
+// const stripe = require('stripe')('STRIPE_KEY_TEST');
 const PORT = process.env.PORT || 3000
 
 app.post('/payment-sheet', async (req, res) => {
@@ -110,7 +110,7 @@ app.post('/payment-sheet', async (req, res) => {
     amount: paymentIntent.amount,
     ephemeralKey: ephemeralKey.secret,
     customer: customer.id,
-    // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
+    // publishableKey: 'STRIPE_KEY'
   });
 });
 
@@ -235,7 +235,7 @@ app.post('/create-checkout-session2', async (req, res) => {
       amount: paymentIntent.amount,
       ephemeralKey: ephemeralKey.secret,
       customer: customer.id,
-      // publishableKey: 'pk_live_51MzWeiEYzAPwGPE13wscXu5RF5KI12zxxPgLcDS4fMW6T1DOlAjNqREMP2g5SIfDeZVSGtvQuAj8bpQMIGmYrt5U00ZHCar5IV'
+      // publishableKey: 'STRIPE_KEY'
     });
 
   // res.redirect(303, 'http://will-doro-ff47e2266450.herokuapp.com/success?email=email')
